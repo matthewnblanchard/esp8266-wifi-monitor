@@ -1,0 +1,526 @@
+
+data=¬’P
+data=®’P
+data=¬’P
+data=©’P
+data=§’P
+data=¦’P
+data=§’P
+data=¦’P
+data=¦’P
+rlœ˜rŸŒcân€àŒ‚ìpŒ<‚Ÿì8’ßÇ’ÜäŒpònnä„;ònÄ’Üäb#l``pònàÃÜà‚‡Àl€€€b€nâãn€ä‚ì˜pŒònnîÄÁŒl`Ü#‚nÀ;nr’ß;ÄÀ?‚Ç;pònàƒÜàrÇâÜ€pp’Ü<ÄàlŒbÀÄ¾~ònîÄÈrÜ#‚nÀrnr’ß;„À?€Œ8rpònàÃÜàrÇâÜìàpp’Ü<ÄÛàbÀÄ¾~ònîÄÀrÜ#‚nÀ;nr’Ÿ;ÄÀ?œlœ;rßÛ’nÀàâÇ`ŒâÜì8‚nÀä>rÜØònãb‚‚lrŒâÜçI8‚Œò±€rŒâÜçI8‚ìò±0UART speed set to 115200
+mode : sta(5c:cf:7f:1a:2c:3e)
+add if0
+data=¨’P
+data=ª’P
+data=¬’P
+data=®’P
+data=­’P
+data=­’P
+data=­’P
+data=¨
+data=®’P
+data=­’P
+data=­’P
+data=­’P
+data= ]P
+data=¢]P
+data=­’P
+data=­’P
+data=¬’P
+data=­’P
+data=¬’P
+data=¬’P
+data=ª’P
+data=¬’P
+data=©’P
+data=¨’P
+data=ª’P
+data=«’P
+data=­’P
+data=­’P
+data=­’P
+data=¬’P
+data=­’P
+data=­’P
+data=¬’P
+data=«’P
+data=«’P
+data=¬’P
+data=«’P
+data=­’P
+data=«’P
+data=­’P
+data=¬’P
+data=­’P
+data=«’P
+data=¬’P
+data=­’P
+data=­’P
+data=­’P
+data=­’P
+data=®’P
+data=­’P
+data=®’P
+data=­’P
+data=®’P
+data=¬’P
+data=­’P
+data=­’P
+data=­’P
+data=­’P
+data=­’P
+data=­’P
+data=­’P
+data=¬’P
+data=«’P
+data=­’P
+data=«’P
+data=­’P
+data=­’P
+data=­’P
+data=¬’P
+data=¬’P
+data=­’P
+data=­’P
+data=¬’P
+data=­’P
+data=­’P
+data=¬’P
+data=­’P
+data=¬’P
+data=«’P
+data=¬’P
+data=¨
+data=¬’P
+data=®’P
+data=®’P
+data=®’P
+data=¬’P
+data=®’P
+data=®’P
+data=®’P
+data=­’P
+data=­’P
+data=­’P
+data=«’P
+data=«’P
+data=¦’P
+data=¥’P
+data=«’P
+data=¬’P
+data=«’P
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rlœØrŸŒ#ânÀàŒ‚ìpŒ<‚ßì8’ßÇ’ÜäŒpònnäÄ;òn„’Üäbç$	rrpònàƒÜà‚ÇÀl€€€bÀnâãnÀä‚ìØpŒònnîÄÁŒl`Ü#‚nÀ;nr’ß;ÄÀ?rpònàÃÜ€àrÇâÜ€pp’Ü<ÄàlŒbÀÄ¾~ònîÄÈrÜ#‚nÀrnr’ß;„À?bÜ;ˆpònàÃÜàrÇâÜìàpp’Ü<ÄÛàbÀÄ¾~ònîÄÀrœ#‚nÀ;nr’ß;ÄÀ?l`¸’ß;ÄÀ?l`ŒâÜì8‚nÀä¾rœØònãb‚‚lrŒâÜçI8‚Œò1€rŒâœçÉ8‚ìò±0UART speed set to 115200
+mode : sta(5c:cf:7f:1a:2c:3e)
+add if0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+rlœ˜rŸŒ#ânÀˆàŒ‚ìpŒ<‚ßì8’ßÇ’ÜäŒpònnäÄ;ònÄ’Üäbç$‰rrpònàÃÜ€à‚‡Àl€€€bÀnâãnÀä‚ì˜pŒònnîÄÁŒl`Ü#‚nÀ;nr’ß;ÄÀ?âlrpònàÃÜ€àrÇâÜ€pp’Ü<ÄàlŒbÀÄ¾~ònîÄÈrÜ#‚nÀrnr’ß;ÄÀbÜ;ˆpònàƒÜàrÇâÜìàpp’œ<„Û€bÀÄ¾~ònîÄÀrÜ#‚nÀ;nr’Ÿ;ÄÀ?lrrßÛ’nÀàrÇãl`Œâœì8‚nÀä¾rÜØònãb‚‚lrŒâÜçÉ8‚Œò1€rŒâœçÉ8‚ìò10UART speed set to 115200
+mode : sta(5c:cf:7f:1a:2c:3e)
+add if0
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+rlœØrßŒ#ânÀˆàŒ‚ìpŒ<‚ßì8’ßÇ’ÜäŒpònnäÄ;ònÄ’Üäb#l``pònàÃÜà‚‡Àl€€€bÀnâãnÀä‚ìØpŒònnîÄÁŒl`Ü#‚nÀ;nr’ß;ÄÀ?âlrpònàÃÜ€àrÇâÜ€pp’Ü<ÄàlŒbÀÄ¾~ònîÄÈrÜ#‚nÀrnr’ß;ÄÀ?bÜ;pònàÃÜ€àrÇâÜìàpp’Ü<ÄÛ€bÀÄ>~ònîÄÀrÜ#‚nÀ;nr’ß;ÄÀ?Œl;rßÛ’nÀàbÇÛl`ŒâÜì8‚nÀä¾rÜØònãb‚‚lrŒâÜçI8‚Œò1€rŒâÜçI8‚ìò10UART speed set to 115200
+mode : sta(5c:cf:7f:1a:2c:3e)
+add if0
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
+received packet: len=128
+
+
