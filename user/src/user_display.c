@@ -1,4 +1,6 @@
 #include "user_display.h"
+#include "user_task.h"
+#include "user_sniffer.h"
 #include <gpio.h>
 
 uint8 display_matrix[1024];
@@ -50,9 +52,6 @@ char digit_encoding[10][4] = {
 void ICACHE_FLASH_ATTR user_lcd_init(os_event_t *e)
 {
 
-	// Disable interrupts, this section is timing critical
-	ETS_GPIO_INTR_DISABLE();
-
 	// A long string of commands for setup. These seem to be agreed upon
 	// by the community, but some of them seem nonsensical. Will need review
 	user_lcd_cmd(0xAE);	// Turn the display off
@@ -78,34 +77,18 @@ void ICACHE_FLASH_ATTR user_lcd_init(os_event_t *e)
 	user_lcd_cmd(0x20);
 	user_lcd_cmd(0x00);
 
-	// Clear the LCD
-	user_lcd_clear();
-
-	user_lcd_sniffer_xaxis();
-	user_lcd_sniffer_yaxis();	
-	user_lcd_sniffer_title();
-
-	user_lcd_sniffer_channel_bar(1, 0.1, 5);
-	user_lcd_sniffer_channel_bar(2, 0.2, 20);
-	user_lcd_sniffer_channel_bar(3, 0.3, 30);
-	user_lcd_sniffer_channel_bar(4, 0.4, 40);
-	user_lcd_sniffer_channel_bar(5, 0.5, 50);
-	user_lcd_sniffer_channel_bar(6, 0.6, 60);
-	user_lcd_sniffer_channel_bar(7, 0.7, 70);
-	user_lcd_sniffer_channel_bar(8, 0.8, 80);
-	user_lcd_sniffer_channel_bar(9, 0.9, 90);
-	user_lcd_sniffer_channel_bar(10, 1.0, 100);
-	user_lcd_sniffer_channel_bar(11, 0.0, 110);
-
 	// Update the LCD
-	user_lcd_update();
+	user_lcd_sniffer_update();
 
-	// Re-enable interrupts
-	ETS_GPIO_INTR_ENABLE();
+	TASK_RETURN(SIG_INIT, PAR_INIT_DISPLAY_DONE);
+	return;
 };
 
 void ICACHE_FLASH_ATTR user_lcd_cmd(uint8 cmd)
 {
+	// Disable interrupts, this section is timing critical
+	ETS_GPIO_INTR_DISABLE();
+
 	// Start condition
 	user_i2c_start_bit();
 
@@ -127,6 +110,9 @@ void ICACHE_FLASH_ATTR user_lcd_cmd(uint8 cmd)
 	// Stop condition
 	user_i2c_stop_bit();
 
+	// Re-enable interrupts
+	ETS_GPIO_INTR_ENABLE();
+
 	return;	
 };
 
@@ -134,6 +120,8 @@ void ICACHE_FLASH_ATTR user_lcd_update(void)
 {
 	uint16 i = 0;	// Loop index 
 	
+	// Disable interrupts, this section is timing critical
+	ETS_GPIO_INTR_DISABLE();
 
 	// Indicate we are writing data by writing the slave's address followed by a '0'
 	user_i2c_write_byte((SLAVE_ADDRESS << 1) | 0x00);	
@@ -168,6 +156,9 @@ void ICACHE_FLASH_ATTR user_lcd_update(void)
 
 	// Stop condition
 	user_i2c_stop_bit();
+
+	// Re-enable interrupts
+	ETS_GPIO_INTR_ENABLE();
 
 	return;	
 };
@@ -406,4 +397,28 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_channel_bar(uint16 channel, float percen
 
 	return;
 	
+};
+
+void ICACHE_FLASH_ATTR user_lcd_sniffer_update(void)
+{
+	uint16 i = 0;	// Loop index	
+	
+	// Clear the LCD
+	user_lcd_clear();
+
+	// Assemble the axis of the graph
+	user_lcd_sniffer_xaxis();
+	user_lcd_sniffer_yaxis();	
+	user_lcd_sniffer_title();
+
+	// Draw the bars
+	for (i = 0; i < 11; i++) {
+		user_lcd_sniffer_channel_bar(
+			i + 1,						// Channel #
+			(float)pchannel[i] / (float)ptotal,		// Percent of total packets
+			(pchannel[i] * 1000) / CHANNEL_SWEEP_TIME);	// Packets/second
+	};
+
+	// Update the LCD
+	user_lcd_update();
 };

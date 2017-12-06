@@ -32,6 +32,7 @@ os_event_t * user_msg_queue_2;
 
 // Timers
 os_timer_t timer_reboot;
+os_timer_t timer_sweep;
 
 // Task Calling Macros
 #define TASK_RETURN(sig,par) 		system_os_post(USER_TASK_PRIO_2, (sig), (par))
@@ -70,5 +71,10 @@ enum {
 #define PAR_CONTROL_START			(uint32)(0x0000)
 #define PAR_CONTROL_ERR_DEADLOOP		(uint32)(0xFFFE)
 #define PAR_CONTROL_ERR_FATAL			(uint32)(0xFFFF)
+
+// Initialization Signals
+#define SIG_INIT				(uint32)(0x0001 << 16)
+#define PAR_INIT_DISPLAY_DONE			(uint32)(0x0000)
+#define PAR_INIT_SNIFF_DONE			(uint32)(0x0001)
 
 #endif

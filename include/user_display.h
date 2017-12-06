@@ -99,5 +99,12 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_title(void);
 //	uint16 pps: Total packets per second for the channel
 void ICACHE_FLASH_ATTR user_lcd_sniffer_channel_bar(uint16 channel, float percent, uint16 pps);
 
+// Application Function: user_lcd_sniffer_update(void)
+// Desc: Updates the WiFi sniffer plot with new information
+// Args:
+//	Nothing
+// Returns:
+//	Nothing
+void ICACHE_FLASH_ATTR user_lcd_sniffer_update(void);
 
 #endif

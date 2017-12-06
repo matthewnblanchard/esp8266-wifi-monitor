@@ -2,6 +2,7 @@
 #include <osapi.h>
 #include <mem.h>
 #include "user_sniffer.h"
+#include "user_task.h"
 
 struct wlan_header {
 	uint16 frame_ctrl;
@@ -12,6 +13,11 @@ struct wlan_header {
 	uint16 seq_ctrl;
 	uint8 addr_4[6];
 };
+
+uint16 pchannel[11];	// Packets counted at each channel
+uint16 ptotal;		// Total packets counted
+
+uint16 cur_channel;	// Current channel
 
 #define FRAME_CTRL_PROTO_VER(X) (((X) & 0xC000) >> 14)
 #define FRAME_CTRL_TYPE(X) (((X) & 0x3000) >> 12)
@@ -39,11 +45,27 @@ void ICACHE_FLASH_ATTR wifi_sniffer_init(os_event_t *e)
 	// Set the callback function for when a packet is received
 	wifi_set_promiscuous_rx_cb(packet_recv_cb);	
 
+	// Reset packet counts
+	cur_channel = 1;
+	ptotal = 0;
+	os_memset(pchannel, 0, 22);
+
+	wifi_set_channel(cur_channel);
+
+	TASK_RETURN(SIG_INIT, PAR_INIT_SNIFF_DONE);
+
 	return;
 };
 
 void ICACHE_FLASH_ATTR packet_recv_cb(uint8 *buf, uint16 len)
 {
+	// Increment channel and total packet counter
+	if (cur_channel <= 11) {
+		pchannel[cur_channel - 1]++;
+		ptotal++;
+	}
+
+	/*
 	struct wlan_header *header = (struct wlan_header *)os_zalloc(sizeof(struct wlan_header));
 
 	// The packet header is 30 bytes. If the length is less than this, there must have been an error
@@ -54,6 +76,25 @@ void ICACHE_FLASH_ATTR packet_recv_cb(uint8 *buf, uint16 len)
 
 	// Transfer first 30 bytes to the header structure
 	os_memcpy(header, buf, 30);
+	*/
 
+	return;
+};
+
+void ICACHE_FLASH_ATTR user_channel_sweep(void)
+{
+	// Increment channel
+	cur_channel++;
+
+	// After all 11 channels have been swept, update the LCD, then reset
+	if (cur_channel == 12) {
+		user_lcd_sniffer_update();
+		ptotal = 0;
+		os_memset(pchannel, 0, 22);
+		cur_channel = 0;
+		return;
+	};
 	
+	wifi_set_channel(cur_channel);
+	return;
 };

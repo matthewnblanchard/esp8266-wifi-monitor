@@ -87,6 +87,21 @@ void ICACHE_FLASH_ATTR user_control_task(os_event_t *e)
 			os_timer_arm(&timer_reboot, 5000, false);
 			TASK_RETURN(SIG_CONTROL, PAR_CONTROL_ERR_DEADLOOP);
 			break;
+
+		/* ---------------------- */
+		/* Initialization Signals */
+		/* ---------------------- */
+
+		// After the display is initialized, begin sweeping WiFi channels
+		case SIG_INIT | PAR_INIT_DISPLAY_DONE:
+			TASK_START(wifi_sniffer_init, 0, 0);
+			break;
+
+		case SIG_INIT | PAR_INIT_SNIFF_DONE:
+			os_timer_setfn(&timer_sweep, user_channel_sweep, NULL);
+			os_timer_arm(&timer_sweep, CHANNEL_SWEEP_TIME, true);
+			break;
+				
 	};
 
 	return;
