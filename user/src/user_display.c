@@ -364,7 +364,8 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_title(void)
 	user_lcd_hline(16, 17, 127);
 
 	// Draw the title of the plot
-	user_lcd_text("Packets per Second", 18, 0, 10);
+	user_lcd_text("EXP", 3, 0, 0);
+	user_lcd_text("PPS", 3, 1, 0);
 
 	return;
 };
@@ -377,23 +378,39 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_channel_bar(uint16 channel, float percen
 	uint16 start_h = 47 - (uint16)(percent * (float)(47 - 16)); // Start height is a percent portion of the whole plot height
 	uint16 i = 0;				// Loop index
 	uint8 digit = 0;			// Digit for printing pps	
+	uint8 pow = 0;				// Power of pps, such that pps = num * 10^pow
+	uint8 num = 0;				// Two most sig figs in the pps
 
 	for (i = start_col; i <= end_col; i++) {
 		user_lcd_vline(i, start_h, end_h);
 	};
 	
-	// The max displayable pps is 99
-	uint16 num = (pps > 99) ? 99 : pps;
+	// Extract the power by successive division until num is under 100
+	num = pps;
+	while (num >= 100) {
+		num /= 10;
+		pow++;
+	};
 
-	// Tens place
+	// Tens place of num
 	if ((num / 10) != 0) {
 		digit = (num / 10) + 0x30;
 		user_lcd_text(&digit, 1, 1, start_col);
 	}
 
-	// Ones place
+	// Ones place of num
 	digit = (num % 10) + 0x30;
 	user_lcd_text(&digit, 1, 1, start_col + 4);
+
+	// Tens place of pow
+	if ((pow / 10) != 0) {
+		digit = (pow / 10) + 0x30;
+		user_lcd_text(&digit, 1, 0, start_col);
+	}
+
+	// Ones place of pow
+	digit = (pow % 10) + 0x30;
+	user_lcd_text(&digit, 1, 0, start_col + 4);
 
 	return;
 	
