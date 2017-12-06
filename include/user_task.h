@@ -1,5 +1,4 @@
 // user_task.h
-// Authors: Christian Auspland & Matthew Blanchard
 // Description: Contains definitions for the the user task
 //	signals and parameters. These need to made available 
 //	to all other source files for proper communication with

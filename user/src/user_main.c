@@ -1,6 +1,4 @@
 // user_main.c
-// Authors: Christian Auspland & Matthew Blanchard
-// Description: main file for the interior sensor system software
 
 #include <user_interface.h>
 #include <osapi.h>
@@ -8,6 +6,8 @@
 #include <mem.h>
 #include "user_task.h"
 #include "user_sniffer.h"
+#include "user_i2c.h"
+#include "user_display.h"
 
 // Function prototypes
 void ICACHE_FLASH_ATTR user_init(void);				// First step initialization function. Handoff from bootloader.
@@ -70,7 +70,7 @@ void ICACHE_FLASH_ATTR user_control_task(os_event_t *e)
 		// Control entry point. The interior begins by scanning for AP's using the
 		// SSID/password it has saved in memory.
 		case SIG_CONTROL | PAR_CONTROL_START:
-			TASK_START(wifi_sniffer_init, 0, 0);
+			TASK_START(user_lcd_init, 0, 0);
 			break;
 
 		// Deadloop of task calls while waiting for the system to restart
@@ -96,6 +96,34 @@ void ICACHE_FLASH_ATTR user_control_task(os_event_t *e)
 // Desc: Initializes the GPIO pins
 void ICACHE_FLASH_ATTR user_gpio_init(void)
 {
+        // Disable GPIO interrupts during initialization
+        ETS_GPIO_INTR_DISABLE();
+
+        // Set pin functions to GPIO 
+        PIN_FUNC_SELECT(SDA_MUX, SDA_FUNC);
+        PIN_FUNC_SELECT(SCL_MUX, SCL_FUNC);
+
+        // Set I2C pins to open-drain
+        GPIO_REG_WRITE(
+		GPIO_PIN_ADDR(GPIO_ID_PIN(SDA_PIN)), 
+		GPIO_REG_READ(GPIO_PIN_ADDR(GPIO_ID_PIN(SDA_PIN))) | GPIO_PIN_PAD_DRIVER_SET(GPIO_PAD_DRIVER_ENABLE));
+        GPIO_REG_WRITE(
+		GPIO_PIN_ADDR(GPIO_ID_PIN(SCL_PIN)), 
+		GPIO_REG_READ(GPIO_PIN_ADDR(GPIO_ID_PIN(SCL_PIN))) | GPIO_PIN_PAD_DRIVER_SET(GPIO_PAD_DRIVER_ENABLE));
+	
+        // Enable pins
+        GPIO_REG_WRITE(GPIO_ENABLE_ADDRESS, GPIO_REG_READ(GPIO_ENABLE_ADDRESS) | SDA_BIT);
+        GPIO_REG_WRITE(GPIO_ENABLE_ADDRESS, GPIO_REG_READ(GPIO_ENABLE_ADDRESS) | SCL_BIT);
+
+        // GPIO initialization
+        gpio_init();
+
+	// Start I2C pins high
+        gpio_output_set(SDA_BIT, 0, SDA_BIT, 0);
+       	gpio_output_set(SCL_BIT, 0, SCL_BIT, 0);
+
+        // Re-enable GPIO interrupts
+        ETS_GPIO_INTR_ENABLE();
 
         return;
 };
