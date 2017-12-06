@@ -82,6 +82,20 @@ void ICACHE_FLASH_ATTR user_lcd_init(os_event_t *e)
 	user_lcd_clear();
 
 	user_lcd_sniffer_xaxis();
+	user_lcd_sniffer_yaxis();	
+	user_lcd_sniffer_title();
+
+	user_lcd_sniffer_channel_bar(1, 0.1, 5);
+	user_lcd_sniffer_channel_bar(2, 0.2, 20);
+	user_lcd_sniffer_channel_bar(3, 0.3, 30);
+	user_lcd_sniffer_channel_bar(4, 0.4, 40);
+	user_lcd_sniffer_channel_bar(5, 0.5, 50);
+	user_lcd_sniffer_channel_bar(6, 0.6, 60);
+	user_lcd_sniffer_channel_bar(7, 0.7, 70);
+	user_lcd_sniffer_channel_bar(8, 0.8, 80);
+	user_lcd_sniffer_channel_bar(9, 0.9, 90);
+	user_lcd_sniffer_channel_bar(10, 1.0, 100);
+	user_lcd_sniffer_channel_bar(11, 0.0, 110);
 
 	// Update the LCD
 	user_lcd_update();
@@ -251,22 +265,24 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_xaxis(void)
 
 	// Single digit channels
 	for (channel = 1; channel <= 9; channel++) {
-		pos += 2;			// Space of padding
+		pos++;			// Space of padding
 		pos += 4;		// Skip a space
 		digit = channel + 0x30;	// Convert digit to ASCII
 		user_lcd_text(&digit, 1, 6, pos);	// Display digit
 		pos += 4;
+		pos++;			// Space of padding
 	};
 
 	// Double digit channels
 	for (channel = 10; channel <= 11; channel++) {
-		pos += 2;					// Space of padding
+		pos++;					// Space of padding
 		digit = 0x31;				// Display leading '1'
 		user_lcd_text(&digit, 1, 6, pos);	
 		pos += 4;				
 		digit = (channel % 10) + 0x30;		// Convert 1's place to ASCII
 		user_lcd_text(&digit, 1, 6, pos);
 		pos += 4;
+		pos++;					// Space of padding
 	};
 
 	// Draw hline at the bottom of the 6th row
@@ -284,7 +300,7 @@ void ICACHE_FLASH_ATTR user_lcd_hline(uint16 height, uint16 start_pos, uint16 en
 		return;
 	};
 
-	// Check that starting and ending positions
+	// Check that starting and ending positions are valid
 	if ((start_pos > 127) || (end_pos > 127) || (end_pos <= start_pos)) {
 		return;
 	};  		
@@ -295,4 +311,99 @@ void ICACHE_FLASH_ATTR user_lcd_hline(uint16 height, uint16 start_pos, uint16 en
 	};
 	
 	return;
+};
+
+void ICACHE_FLASH_ATTR user_lcd_vline(uint16 col, uint16 start_h, uint16 end_h)
+{
+	uint16 i = 0;	// Loop index
+
+	// If the column is off the display matrix, discard
+	if (col > 127) {
+		return;
+	};
+
+	// Check that starting and ending heights are valid
+	if ((start_h > 63) || (end_h > 63) || (end_h <= start_h)) {
+		return;
+	};  	
+
+	// Fill in each pixel vertically in sequence
+	for (i = start_h; i <= end_h; i++) {
+		display_matrix[((i / 8) * 128) + col] |= (0x01) << (i % 8);
+	};	
+
+	return;	
+};
+
+void ICACHE_FLASH_ATTR user_lcd_sniffer_yaxis(void)
+{
+
+	// Print % symbol for label
+	display_matrix[(2 * 128) + 0] = 0x11;
+	display_matrix[(2 * 128) + 1] = 0x08;
+	display_matrix[(2 * 128) + 2] = 0x04;
+	display_matrix[(2 * 128) + 3] = 0x02;
+	display_matrix[(2 * 128) + 4] = 0x11;
+	display_matrix[(2 * 128) + 5] = 0x00;
+
+	// Print "TFC" for "traffic", vertically
+	user_lcd_text("T", 1, 3, 0);
+	user_lcd_text("F", 1, 4, 0);
+	user_lcd_text("C", 1, 5, 0);
+
+	// Print percentage marks
+	user_lcd_text("100", 3, 2, 6);
+	user_lcd_text("75", 2, 3, 10);
+	user_lcd_text("50", 2, 4, 10);
+	user_lcd_text("25", 2, 5, 10);
+	
+	
+	// Draw vline at 17th column
+	user_lcd_vline(17, 16, 47);
+
+	// Draw vline at the 127th column
+	user_lcd_vline(127, 16, 47);
+
+	return;
+};
+
+void ICACHE_FLASH_ATTR user_lcd_sniffer_title(void)
+{
+	// Draw a horizontal line at the top of the plotting area
+	user_lcd_hline(16, 17, 127);
+
+	// Draw the title of the plot
+	user_lcd_text("Packets per Second", 18, 0, 10);
+
+	return;
+};
+
+void ICACHE_FLASH_ATTR user_lcd_sniffer_channel_bar(uint16 channel, float percent, uint16 pps) {
+	
+	uint16 start_col = 9 + (channel * 10);	// Starting column
+	uint16 end_col = start_col + 7;		// Ending column
+	uint16 end_h = 47;			// Ending height
+	uint16 start_h = 47 - (uint16)(percent * (float)(47 - 16)); // Start height is a percent portion of the whole plot height
+	uint16 i = 0;				// Loop index
+	uint8 digit = 0;			// Digit for printing pps	
+
+	for (i = start_col; i <= end_col; i++) {
+		user_lcd_vline(i, start_h, end_h);
+	};
+	
+	// The max displayable pps is 99
+	uint16 num = (pps > 99) ? 99 : pps;
+
+	// Tens place
+	if ((num / 10) != 0) {
+		digit = (num / 10) + 0x30;
+		user_lcd_text(&digit, 1, 1, start_col);
+	}
+
+	// Ones place
+	digit = (num % 10) + 0x30;
+	user_lcd_text(&digit, 1, 1, start_col + 4);
+
+	return;
+	
 };

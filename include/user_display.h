@@ -54,6 +54,14 @@ void ICACHE_FLASH_ATTR user_lcd_text(uint8 *text, uint16 len, uint16 line, uint1
 //	Nothing
 void ICACHE_FLASH_ATTR user_lcd_sniffer_xaxis(void);
 
+// Application Function: user_lcd_sniffer_yaxis(void);
+// Desc: Prints the y axis of the sniffer graph to the LCD
+// Args:
+//	None
+// Returns:
+//	Nothing
+void ICACHE_FLASH_ATTR user_lcd_sniffer_yaxis(void);
+
 // Application Function: user_lcd_hline(uint16 height, uint16 start_pos, uint16 end_pos);
 // Desc: Prints a horizontal line at the input height
 // Args:
@@ -64,5 +72,32 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_xaxis(void);
 // Returns:
 //	Nothing
 void ICACHE_FLASH_ATTR user_lcd_hline(uint16 height, uint16 start_pos, uint16 end_pos);
+
+// Application Function: user_lcd_vline(uint16 col, uint16 start_h, uint16 end_h);
+// Desc: Prints a vertial line at the input column
+// Args:
+//	uint16 col: The desired column, stsrting from the left
+//	uint16 start_h: Starting height
+//	uint16 end_h:	Ending height
+// Returns:
+//	Nothing
+void ICACHE_FLASH_ATTR user_lcd_vline(uint16 col, uint16 start_h, uint16 end_h);
+
+// Application Function: user_lcd_sniffer_title(void);
+// Desc: Prints the title of the sniffer grapj
+// Args:
+//	None
+// Returns:
+//	Nothing
+void ICACHE_FLASH_ATTR user_lcd_sniffer_title(void);
+
+// Application Function: user_lcd_sniffer_channel_bar(uint16 channel, float percent);
+// Desc: Prints a percent bar for the given channel, based on the input percent
+// Args:
+//	uint16 channel:	WiFi channel at which to place the bar
+//	float percent:	Percent of bar to fill
+//	uint16 pps: Total packets per second for the channel
+void ICACHE_FLASH_ATTR user_lcd_sniffer_channel_bar(uint16 channel, float percent, uint16 pps);
+
 
 #endif
