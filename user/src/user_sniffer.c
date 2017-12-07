@@ -14,8 +14,9 @@ struct wlan_header {
 	uint8 addr_4[6];
 };
 
-uint16 pchannel[11];	// Packets counted at each channel
-uint16 ptotal;		// Total packets counted
+uint32 channel_sweep_time = 500;	// Time in ms to sweep each channel
+uint32 pchannel[11];	// Packets counted at each channel
+uint32 ptotal;		// Total packets counted
 uint16 cur_channel;	// Current channel
 
 #define FRAME_CTRL_PROTO_VER(X) (((X) & 0xC000) >> 14)
@@ -47,7 +48,7 @@ void ICACHE_FLASH_ATTR wifi_sniffer_init(os_event_t *e)
 	// Reset packet counts
 	cur_channel = 1;
 	ptotal = 0;
-	os_memset(pchannel, 0, 22);
+	os_memset(pchannel, 0, 44);
 
 	// Set the channel to 1
 	wifi_set_channel(cur_channel);
@@ -60,7 +61,7 @@ void ICACHE_FLASH_ATTR wifi_sniffer_init(os_event_t *e)
 void ICACHE_FLASH_ATTR packet_recv_cb(uint8 *buf, uint16 len)
 {
 	// Increment channel and total packet counter
-	if (cur_channel <= 11) {
+	if ((cur_channel <= 11) && (cur_channel != 0)) {
 		pchannel[cur_channel - 1]++;
 		ptotal++;
 	}
@@ -77,7 +78,7 @@ void ICACHE_FLASH_ATTR user_channel_sweep(void)
 	if (cur_channel == 12) {
 		user_lcd_sniffer_update();
 		ptotal = 0;
-		os_memset(pchannel, 0, 22);
+		os_memset(pchannel, 0, 44);
 		cur_channel = 0;
 		return;
 	};

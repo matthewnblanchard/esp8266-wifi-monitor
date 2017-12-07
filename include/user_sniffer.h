@@ -10,9 +10,10 @@
 
 #define CHANNEL_SWEEP_TIME	500	// Time in ms to spend on each channel
 
-extern uint16 pchannel[11];	// Packets counted at each channel
-extern uint16 ptotal;		// Total packets counted
-extern uint16 cur_channel;	// Current channel
+extern uint32 channel_sweep_time;		// Time in ms to sweep each channel
+extern uint32 pchannel[11];			// Packets counted at each channel
+extern uint32 ptotal;				// Total packets counted
+extern uint16 cur_channel;			// Current channel
 
 // User Task: wifi_sniffer_init(os_event_t *e)
 // Desc: Configures the ESP8266 to act as a Wifi Sniffer.

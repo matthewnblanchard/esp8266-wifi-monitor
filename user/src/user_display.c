@@ -436,9 +436,32 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_update(void)
 		user_lcd_sniffer_channel_bar(
 			i + 1,						// Channel #
 			(float)pchannel[i] / (float)ptotal,		// Percent of total packets
-			(pchannel[i] * 1000) / CHANNEL_SWEEP_TIME);	// Packets/second
+			(pchannel[i] * 1000) / channel_sweep_time);	// Packets/second
 	};
 
 	// Update the LCD
 	user_lcd_update();
+};
+
+void ICACHE_FLASH_ATTR user_lcd_sniffer_show_sweep(void)
+{
+	uint16 pos = 100;			// Starting position for digits
+	uint32 num = channel_sweep_time; 	// Number to display
+	uint8 digit = 0;			// Digit to display
+
+	user_lcd_clear();
+
+	// Notify the user that the sweep time has changed
+	user_lcd_text("SWEEP TIME CHANGED", 18, 3, 12);
+	user_lcd_text("MS", 2, 4, 104);
+	
+	while (num > 0) {
+		digit = (num % 10) + 0x30;
+		user_lcd_text(&digit, 1, 4, pos);
+		num /= 10;
+		pos -= 4;
+	}
+	
+	user_lcd_update();	
+	return;
 };

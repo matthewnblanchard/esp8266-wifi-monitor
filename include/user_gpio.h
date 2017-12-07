@@ -17,6 +17,10 @@
 #define BUTTON1_BIT	BIT13
 #define BUTTON1_MUX	PERIPHS_IO_MUX_MTCK_U
 #define BUTTON1_FUNC	FUNC_GPIO13	
+#define BUTTON2_PIN	14
+#define BUTTON2_BIT	BIT14
+#define BUTTON2_MUX	PERIPHS_IO_MUX_MTMS_U
+#define BUTTON2_FUNC	FUNC_GPIO14
 
 // Interrupt Service Routine: user_gpio_isr(uint32 intr_mask, void *arg)
 // Desc: ISR called when a GPIO interrupt happens

@@ -2,19 +2,31 @@
 
 void user_gpio_isr(uint32 intr_mask, void *arg)
 {
-	static uint32 last_time = 0;
+	static uint32 last_time1 = 0;
+	static uint32 last_time2 = 0;
 	gpio_intr_ack(intr_mask);
 
 	uint32 gpio_status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);	// Check which GPIO(s) have an interrupt queued
 
-	// Check if a ZCD interrupt occured
+	/*
 	if (intr_mask & (BUTTON1_BIT)) {	
-		uint32 cur_time = system_get_time();	// Use the system time register for software debouncing
-		if ((cur_time - last_time) > 750) {
-			last_time = cur_time;
+		uint32 cur_time1 = system_get_time();	// Use the system time register for software debouncing
+		if ((cur_time1 - last_time1) > 3000) {
+			last_time1 = cur_time1;
 			TASK_RETURN(SIG_RUN, PAR_RUN_BUTTON1);
 		};
 	};
+	*/
+	
+	if (intr_mask & (BUTTON2_BIT)) {	
+		uint32 cur_time2 = system_get_time();		// Use the system time register for software debouncing
+		if ((cur_time2 - last_time2) > 100000) {	// 100ms debouncing
+			last_time2 = cur_time2;
+			TASK_RETURN(SIG_RUN, PAR_RUN_BUTTON2);
+		};
+	};
+	
+
 
 //	GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, gpio_status);
         return;
