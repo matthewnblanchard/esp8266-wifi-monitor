@@ -13,14 +13,14 @@
 #include <ets_sys.h>
 
 // I2C pin definitions - THESE SHOULD NOT BE CHANGED
-#define SDA_PIN 4
-#define SDA_BIT BIT4
-#define SDA_MUX PERIPHS_IO_MUX_GPIO4_U
-#define SDA_FUNC FUNC_GPIO4
-#define SCL_PIN 5
-#define SCL_BIT BIT5
-#define SCL_MUX PERIPHS_IO_MUX_GPIO5_U
-#define SCL_FUNC FUNC_GPIO5
+#define SDA_PIN 5
+#define SDA_BIT BIT5
+#define SDA_MUX PERIPHS_IO_MUX_GPIO5_U
+#define SDA_FUNC FUNC_GPIO5
+#define SCL_PIN 4
+#define SCL_BIT BIT4
+#define SCL_MUX PERIPHS_IO_MUX_GPIO4_U
+#define SCL_FUNC FUNC_GPIO4
 
 // Delay time in microseconds
 #define I2C_DELAY 2

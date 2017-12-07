@@ -21,9 +21,9 @@ BINDIR = user/bin
 OBJDIR = user/obj
 SRCDIR = user/src
 
-OBJ = user_main.o user_pwm.o user_sniffer.o user_i2c.o user_display.o
+OBJ = user_main.o user_sniffer.o user_i2c.o user_display.o
 OBJ := $(addprefix $(OBJDIR)/, $(OBJ))
-SRC = user_main.c user_pwm.c user_sniffer.c user_i2c.c user_display.c
+SRC = user_main.c user_sniffer.c user_i2c.c user_display.c
 SRC := $(addprefix $(SRCDIR)/, $(SRC))
 TARGET = $(BINDIR)/user_main
 
