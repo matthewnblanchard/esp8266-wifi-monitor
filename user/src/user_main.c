@@ -8,6 +8,7 @@
 #include "user_sniffer.h"
 #include "user_i2c.h"
 #include "user_display.h"
+#include "user_gpio.h"
 
 // Function prototypes
 void ICACHE_FLASH_ATTR user_init(void);				// First step initialization function. Handoff from bootloader.
@@ -101,6 +102,16 @@ void ICACHE_FLASH_ATTR user_control_task(os_event_t *e)
 			os_timer_setfn(&timer_sweep, user_channel_sweep, NULL);
 			os_timer_arm(&timer_sweep, CHANNEL_SWEEP_TIME, true);
 			break;
+
+		/* --------------- */
+		/* Running Signals */
+		/* --------------- */
+		
+		// Button1 press event
+		case SIG_RUN | PAR_RUN_BUTTON1:
+			os_printf("button press\r\n");
+			break;		
+
 				
 	};
 
@@ -117,6 +128,8 @@ void ICACHE_FLASH_ATTR user_gpio_init(void)
         // Set pin functions to GPIO 
         PIN_FUNC_SELECT(SDA_MUX, SDA_FUNC);
         PIN_FUNC_SELECT(SCL_MUX, SCL_FUNC);
+	PIN_FUNC_SELECT(HIGH_MUX, HIGH_FUNC);
+	PIN_FUNC_SELECT(BUTTON1_MUX, BUTTON1_FUNC);
 
         // Set I2C pins to open-drain
         GPIO_REG_WRITE(
@@ -129,6 +142,18 @@ void ICACHE_FLASH_ATTR user_gpio_init(void)
         // Enable pins
         GPIO_REG_WRITE(GPIO_ENABLE_ADDRESS, GPIO_REG_READ(GPIO_ENABLE_ADDRESS) | SDA_BIT);
         GPIO_REG_WRITE(GPIO_ENABLE_ADDRESS, GPIO_REG_READ(GPIO_ENABLE_ADDRESS) | SCL_BIT);
+        GPIO_REG_WRITE(GPIO_ENABLE_ADDRESS, GPIO_REG_READ(GPIO_ENABLE_ADDRESS) | HIGH_BIT);
+        GPIO_REG_WRITE(GPIO_ENABLE_ADDRESS, GPIO_REG_READ(GPIO_ENABLE_ADDRESS) | BUTTON1_BIT);
+
+	// Configure HIGH as high output
+	gpio_output_set(HIGH_BIT, 0, HIGH_BIT, 0);
+
+	// Configure Button 1 as input
+	gpio_output_set(0, 0, 0, BUTTON1_BIT);
+
+	// Register ISR 
+        gpio_intr_handler_register(user_gpio_isr, 0);   			    // Register GPIO ISR
+        gpio_pin_intr_state_set(GPIO_ID_PIN(BUTTON1_PIN), GPIO_PIN_INTR_NEGEDGE);   // BUTTON1 falling edge triggers
 
         // GPIO initialization
         gpio_init();

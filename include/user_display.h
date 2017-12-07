@@ -3,6 +3,7 @@
 
 #include "user_i2c.h"
 
+// Address of the display for I2C
 #define SLAVE_ADDRESS 0x3C
 
 // User Task: user_lcd_init(os_event_t *e)

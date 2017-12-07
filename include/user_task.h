@@ -77,4 +77,8 @@ enum {
 #define PAR_INIT_DISPLAY_DONE			(uint32)(0x0000)
 #define PAR_INIT_SNIFF_DONE			(uint32)(0x0001)
 
+// Running Signals
+#define SIG_RUN					(uint32)(0x0002 << 16)
+#define PAR_RUN_BUTTON1				(uint32)(0x0000)
+
 #endif

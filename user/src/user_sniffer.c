@@ -16,7 +16,6 @@ struct wlan_header {
 
 uint16 pchannel[11];	// Packets counted at each channel
 uint16 ptotal;		// Total packets counted
-
 uint16 cur_channel;	// Current channel
 
 #define FRAME_CTRL_PROTO_VER(X) (((X) & 0xC000) >> 14)
@@ -50,6 +49,7 @@ void ICACHE_FLASH_ATTR wifi_sniffer_init(os_event_t *e)
 	ptotal = 0;
 	os_memset(pchannel, 0, 22);
 
+	// Set the channel to 1
 	wifi_set_channel(cur_channel);
 
 	TASK_RETURN(SIG_INIT, PAR_INIT_SNIFF_DONE);
@@ -64,19 +64,6 @@ void ICACHE_FLASH_ATTR packet_recv_cb(uint8 *buf, uint16 len)
 		pchannel[cur_channel - 1]++;
 		ptotal++;
 	}
-
-	/*
-	struct wlan_header *header = (struct wlan_header *)os_zalloc(sizeof(struct wlan_header));
-
-	// The packet header is 30 bytes. If the length is less than this, there must have been an error
-	if (len < 30) {
-		os_printf("Malformed packet\r\n");
-		return;
-	}
-
-	// Transfer first 30 bytes to the header structure
-	os_memcpy(header, buf, 30);
-	*/
 
 	return;
 };
@@ -94,7 +81,8 @@ void ICACHE_FLASH_ATTR user_channel_sweep(void)
 		cur_channel = 0;
 		return;
 	};
-	
+
+	// Switch channels	
 	wifi_set_channel(cur_channel);
 	return;
 };

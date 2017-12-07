@@ -1,6 +1,7 @@
 #include "user_display.h"
 #include "user_task.h"
 #include "user_sniffer.h"
+#include "user_gpio.h"
 #include <gpio.h>
 
 uint8 display_matrix[1024];
@@ -112,6 +113,7 @@ void ICACHE_FLASH_ATTR user_lcd_cmd(uint8 cmd)
 
 	// Re-enable interrupts
 	ETS_GPIO_INTR_ENABLE();
+	gpio_intr_handler_register(user_gpio_isr, 0);
 
 	return;	
 };
@@ -159,6 +161,7 @@ void ICACHE_FLASH_ATTR user_lcd_update(void)
 
 	// Re-enable interrupts
 	ETS_GPIO_INTR_ENABLE();
+	gpio_intr_handler_register(user_gpio_isr, 0);
 
 	return;	
 };
