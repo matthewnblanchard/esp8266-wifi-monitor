@@ -382,7 +382,7 @@ void ICACHE_FLASH_ATTR user_lcd_sniffer_channel_bar(uint16 channel, float percen
 	uint16 i = 0;				// Loop index
 	uint8 digit = 0;			// Digit for printing pps	
 	uint8 pow = 0;				// Power of pps, such that pps = num * 10^pow
-	uint8 num = 0;				// Two most sig figs in the pps
+	uint32 num = 0;				// Two most sig figs in the pps
 
 	for (i = start_col; i <= end_col; i++) {
 		user_lcd_vline(i, start_h, end_h);
