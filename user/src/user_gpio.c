@@ -7,16 +7,6 @@ void user_gpio_isr(uint32 intr_mask, void *arg)
 	gpio_intr_ack(intr_mask);
 
 	uint32 gpio_status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);	// Check which GPIO(s) have an interrupt queued
-
-	/*
-	if (intr_mask & (BUTTON1_BIT)) {	
-		uint32 cur_time1 = system_get_time();	// Use the system time register for software debouncing
-		if ((cur_time1 - last_time1) > 3000) {
-			last_time1 = cur_time1;
-			TASK_RETURN(SIG_RUN, PAR_RUN_BUTTON1);
-		};
-	};
-	*/
 	
 	if (intr_mask & (BUTTON2_BIT)) {	
 		uint32 cur_time2 = system_get_time();		// Use the system time register for software debouncing
@@ -26,8 +16,5 @@ void user_gpio_isr(uint32 intr_mask, void *arg)
 		};
 	};
 	
-
-
-//	GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, gpio_status);
         return;
 };

@@ -1,5 +1,5 @@
 // user_i2c.h
-// Authors: Christian Auspland & Matthew Blanchard
+// Authors:Matthew Blanchard
 // Desc: Contains software i2c functions & definitions. The ESP8266 lacks i2c
 //      hardware, "bit-banging: is necessary
 
